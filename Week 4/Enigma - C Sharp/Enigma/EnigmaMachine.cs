@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -120,8 +121,19 @@ namespace Enigma
         /// specified shift number.</returns>
         public static string CaesarShift(string message, int shift, bool encode)
         {
-            // TO DO - add your implementation
-            throw new NotImplementedException();
+            var result = "";
+            foreach (var ch in message)
+            {
+                if (ch < 'A' || ch > 'Z')
+                    continue;
+                var shiftedChar = encode ? ch + shift : ch - shift;
+                if (encode && shiftedChar > 'Z' || !encode && shiftedChar < 'A')
+                {
+                    shiftedChar = encode ? 'A' + (shiftedChar - 'Z') : 'Z' - (shiftedChar + 'A');
+                }
+                result+=shiftedChar;
+            }
+            return result;
         }
 
 
